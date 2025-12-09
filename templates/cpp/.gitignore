@@ -1,6 +1,5 @@
 build/
 .direnv/
-.vscode
 html/
 latex/
 *cache*

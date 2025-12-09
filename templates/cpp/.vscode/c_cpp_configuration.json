@@ -1,0 +1,9 @@
+{
+  "configurations": [
+    {
+      "name": "Linux-GCC",
+      "cppStandard": "c++23"
+    }
+  ],
+  "version": 4
+}
