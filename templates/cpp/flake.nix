@@ -82,7 +82,8 @@
           ];
           shell = pkgs.zsh;
           shellHook = ''
-            echo "Welcome to the FastInAHurry flake dev shell" 
+            echo "Welcome to the ProjectName flake dev shell" 
+            echo "GCC, Clang, and Python 3.13"
             export CC=gcc
             export CXX=g++
           '';

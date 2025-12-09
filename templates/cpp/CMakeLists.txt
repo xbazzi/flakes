@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(FastInAHurry CXX)
+project(QuickStructs CXX)
 enable_testing()
 include(CTest)
 include(GoogleTest)
@@ -13,43 +13,39 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_options( 
         -g3 
         -Og
+        -stdc++23
         -fsanitize=address,undefined,leak
         -fno-omit-frame-pointer 
         -Wall
+        -Wconversion
+        -Wpedantic
+        -Werror
+        -Wextra
         -Wno-interference-size
     )
 else()
     add_compile_options(
         -O3
-        -g
+        -stdc++23
+        -Wall
+        -Wconversion
+        -Wpedantic
+        -Werror
+        -Wextra
         -march=native
         -Wall
     )
 endif()
-add_link_options(-Wno-interference-size -fsanitize=address,undefined,leak)
 
 
 # Compiler flags and other goodies
+add_link_options(-Wno-interference-size -fsanitize=address,undefined,leak)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-find_package(nlohmann_json REQUIRED)
-find_package(toml11 REQUIRED)
-find_package(PkgConfig REQUIRED)
 find_package(GTest REQUIRED)
 include(FetchContent)
 
-FetchContent_Declare(
-  quickstructs
-  GIT_REPOSITORY https://github.com/xbazzi/quickstructs
-  GIT_TAG        master
-)
-
-FetchContent_MakeAvailable(quickstructs)
-
-# Then link against it
-target_link_libraries(your_target PRIVATE project_name)
 
 include_directories("${CMAKE_SOURCE_DIR}/include")
 
@@ -66,68 +62,7 @@ message("**** Building in ${CMAKE_BUILD_TYPE} mode ")
 message("************************************************************")
 
 
-# Add `options` project
-add_subdirectory(src/fiah/options)
-
-# Common (non-main) sources
-file(GLOB_RECURSE COMMON_SRC
-    "${CMAKE_SOURCE_DIR}/src/fiah/*.cc"
-    "${CMAKE_SOURCE_DIR}/src/fiah/options/*.cc"
-)
-
-# Exclude mains from the common sources
-list(REMOVE_ITEM COMMON_SRC "${CMAKE_SOURCE_DIR}/src/fiah/options/main.cc")
-
-# Create a shared library for common sources (compiled once, linked multiple times)
-add_library(fiah_common STATIC ${COMMON_SRC})
-set_target_properties(fiah_common PROPERTIES
-  CXX_STANDARD 23
-  CXX_STANDARD_REQUIRED YES
-)
-target_compile_features(fiah_common PRIVATE cxx_std_23)
-target_include_directories(fiah_common PUBLIC
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_BINARY_DIR}
-)
-target_link_libraries(fiah_common PUBLIC
-  nlohmann_json::nlohmann_json
-  toml11::toml11
-)
-
-add_executable(client src/client_main.cc)
-set_target_properties(client PROPERTIES
-  CXX_STANDARD 23
-  CXX_STANDARD_REQUIRED YES
-)
-
-add_executable(server src/server_main.cc)
-set_target_properties(server PROPERTIES
-  CXX_STANDARD 23
-  CXX_STANDARD_REQUIRED YES
-)
-
 # Make sure we have C++23
-target_compile_features(server PRIVATE cxx_std_23)
-target_compile_features(client PRIVATE cxx_std_23)
-
-target_link_libraries(client PRIVATE
-  fiah_common
-)
-
-target_link_libraries(server PRIVATE
-  fiah_common
-)
-
-target_include_directories(server PRIVATE 
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_BINARY_DIR} # For generated *.pb.h
-)
-
-
-target_include_directories(client PRIVATE 
-  ${CMAKE_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_BINARY_DIR} # For generated *.pb.h
-)
 
 # ============================================================================
 # Testing Configuration
@@ -198,3 +133,4 @@ endif()
 
 # Optional: Use gtest_discover_tests for better test reporting
 gtest_discover_tests(unit_tests)
+ 
