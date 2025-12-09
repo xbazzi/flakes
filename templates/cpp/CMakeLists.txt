@@ -13,7 +13,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_compile_options( 
         -g3 
         -Og
-        -stdc++23
+        -std=c++23
         -fsanitize=address,undefined,leak
         -fno-omit-frame-pointer 
         -Wall
@@ -26,7 +26,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 else()
     add_compile_options(
         -O3
-        -stdc++23
+        -std=c++23
         -Wall
         -Wconversion
         -Wpedantic
