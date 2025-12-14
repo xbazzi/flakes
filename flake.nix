@@ -41,6 +41,10 @@
           path = ./templates/rust;
           description = "A base template for any rust project";
         };
+        standardml = {
+          path = ./templates/standardml;
+          description = "A base template for any standardml project";
+        };
         cargo-workspace = {
           path = ./templates/cargo-workspace;
           description = "A base template for a new cargo workspace project";
