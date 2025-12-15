@@ -1,5 +1,5 @@
 {
-  description = "DevShell flake for my application";
+  description = "DevShell flake for StandardML projects";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -27,7 +27,7 @@
           ];
 
           shellHook = ''
-            echo "Devshell started successfully"
+            echo "StandardML Devshell started successfully"
           '';
         };
       }
