@@ -35,54 +35,42 @@
           nativeBuildInputs =
             pyPkgs
             ++ (with pkgs; [
+              # Compilers and build tools
               clang
-              bear
+              gcc
               llvm.lldb
               llvm.clang
-              gbenchmark
-              gcc
-              gtest
+              llvmPackages_21.clang-tools
+              bear
               binutils
               cmake
-              gdb
               pkg-config
-              boost
-              toml11
-              openssl
+
+              # Development and debugging tools
+              gdb
               valgrind
-              nlohmann_json
               doxygen
               graphviz
+              nodejs_22
               zsh
-              grpc
-              protobuf
-              llvmPackages_21.clang-tools
+
+              # Testing frameworks
+              gtest
+              gbenchmark
             ]);
 
           buildInputs = with pkgs; [
-            # pkgs.cassandra-cpp-driver
-            llvmPackages_21.clang-tools
-            nodejs_22
-            gcc
-            binutils
-            cmake
-            gdb
-            pkg-config
+            # Libraries your code links against
             boost
             toml11
             openssl
-            valgrind
             nlohmann_json
-            doxygen
-            graphviz
-            zsh
             grpc
             protobuf
-            # llvm.libcxx
           ];
           shell = pkgs.zsh;
           shellHook = ''
-            echo "Welcome to the ProjectName C++/GCC flake dev shell" 
+            echo "Welcome to the <ProjectName> C++/GCC flake dev shell" 
             export CC=gcc
             export CXX=g++
 
